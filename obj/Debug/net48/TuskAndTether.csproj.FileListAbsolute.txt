@@ -1,0 +1,6 @@
+C:\Users\User\OneDrive\Documents\Modding\Valheim\TuskAndTether\TuskAndTether\obj\Debug\net48\TuskAndTether.csproj.AssemblyReference.cache
+C:\Users\User\OneDrive\Documents\Modding\Valheim\TuskAndTether\TuskAndTether\obj\Debug\net48\TuskAndTether.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\OneDrive\Documents\Modding\Valheim\TuskAndTether\TuskAndTether\obj\Debug\net48\TuskAndTether.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive\Documents\Modding\Valheim\TuskAndTether\TuskAndTether\obj\Debug\net48\TuskAndTether.AssemblyInfo.cs
+C:\Users\User\OneDrive\Documents\Modding\Valheim\TuskAndTether\TuskAndTether\obj\Debug\net48\TuskAndTether.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Documents\Modding\Valheim\TuskAndTether\TuskAndTether\obj\Debug\net48\TuskAndTether.sourcelink.json

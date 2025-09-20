@@ -4,20 +4,18 @@ using TuskAndTether.Helpers;
 
 namespace TuskAndTether.Patches
 {
-    [HarmonyPatch(typeof(Character), "Interact")]
+    [HarmonyPatch(typeof(global::Character), nameof(global::Character.Interact))]
     public static class WolfCartPatch
     {
-        static void Postfix(Character __instance, Humanoid character)
+        static void Postfix(global::Character __instance, global::Humanoid character)
         {
             if (!TuskAndTether.EnableWolfCart.Value) return;
             if (__instance == null || character == null) return;
 
-            // Check if it's a tamed wolf
             if (__instance.name.Contains("Wolf") && __instance.IsTamed())
             {
                 FollowStateManager.ToggleFollow(__instance, character);
 
-                // Check if player has a cart attached
                 var cart = GetAttachedCart(character);
                 if (cart != null)
                 {
@@ -27,11 +25,8 @@ namespace TuskAndTether.Patches
             }
         }
 
-        private static GameObject GetAttachedCart(Humanoid player)
+        private static GameObject GetAttachedCart(global::Humanoid player)
         {
-            Rigidbody playerRb = player.GetComponent<Rigidbody>();
-            if (playerRb == null) return null;
-
             foreach (var joint in player.GetComponents<ConfigurableJoint>())
             {
                 if (joint.connectedBody != null && joint.connectedBody.gameObject.name.Contains("Cart"))
@@ -43,18 +38,13 @@ namespace TuskAndTether.Patches
             return null;
         }
 
-        private static void TransferCartToWolf(Character wolf, GameObject cart, Humanoid player)
+        private static void TransferCartToWolf(global::Character wolf, GameObject cart, global::Humanoid player)
         {
-            Rigidbody cartRb = cart.GetComponent<Rigidbody>();
-            if (cartRb == null) return;
-
-            // Remove existing joints
             foreach (var joint in cart.GetComponents<ConfigurableJoint>())
             {
                 Object.Destroy(joint);
             }
 
-            // Create new joint to wolf
             ConfigurableJoint joint = cart.AddComponent<ConfigurableJoint>();
             joint.connectedBody = wolf.GetComponent<Rigidbody>();
             joint.xMotion = ConfigurableJointMotion.Limited;
@@ -63,11 +53,9 @@ namespace TuskAndTether.Patches
             joint.angularXMotion = ConfigurableJointMotion.Locked;
             joint.angularYMotion = ConfigurableJointMotion.Locked;
             joint.angularZMotion = ConfigurableJointMotion.Locked;
-
             joint.anchor = new Vector3(0, 0.5f, -1f);
             joint.autoConfigureConnectedAnchor = true;
 
-            // Ensure wolf follows player
             MonsterAI ai = wolf.GetComponent<MonsterAI>();
             if (ai != null)
             {
@@ -77,8 +65,8 @@ namespace TuskAndTether.Patches
                 ai.m_passiveAggressive = false;
             }
 
-            // Update follow state
             FollowStateManager.SetFollowState(wolf, true);
+            wolf.gameObject.AddComponent<CartTracker>().AttachedCart = cart;
         }
     }
 }

@@ -5,9 +5,9 @@ namespace TuskAndTether.Helpers
 {
     public static class FollowStateManager
     {
-        private static readonly Dictionary<int, bool> followStates = new Dictionary<int, bool>();
+        private static readonly Dictionary<int, bool> followStates = new();
 
-        public static void ToggleFollow(Character creature, Humanoid player)
+        public static void ToggleFollow(global::Character creature, global::Humanoid player)
         {
             if (creature == null || player == null) return;
 
@@ -24,7 +24,6 @@ namespace TuskAndTether.Helpers
                 followStates[id] = false;
                 Debug.Log($"[TuskAndTether] {creature.name} has stopped following.");
 
-                // Detach cart if present
                 CartTracker tracker = creature.GetComponent<CartTracker>();
                 if (tracker != null && tracker.AttachedCart != null)
                 {
@@ -43,14 +42,14 @@ namespace TuskAndTether.Helpers
             }
         }
 
-        public static void SetFollowState(Character creature, bool isFollowing)
+        public static void SetFollowState(global::Character creature, bool isFollowing)
         {
             if (creature == null) return;
             int id = creature.GetInstanceID();
             followStates[id] = isFollowing;
         }
 
-        public static bool IsFollowing(Character creature)
+        public static bool IsFollowing(global::Character creature)
         {
             if (creature == null) return false;
             int id = creature.GetInstanceID();

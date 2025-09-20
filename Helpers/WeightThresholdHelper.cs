@@ -1,26 +1,20 @@
 using UnityEngine;
-using TuskAndTether;
 
 namespace TuskAndTether.Helpers
 {
     public static class WeightThresholdHelper
     {
-        public static float GetWolfWeightLimit(Character wolf)
+        public static float GetWolfWeightLimit(global::Character wolf)
         {
             if (wolf == null) return 0f;
 
-            int level = wolf.m_level;
-            switch (level)
+            return wolf.m_level switch
             {
-                case 0:
-                    return TuskAndTether.WolfWeightLimit_0Star.Value;
-                case 1:
-                    return TuskAndTether.WolfWeightLimit_1Star.Value;
-                case 2:
-                    return TuskAndTether.WolfWeightLimit_2Star.Value;
-                default:
-                    return TuskAndTether.WolfWeightLimit_0Star.Value;
-            }
+                0 => TuskAndTether.WolfWeightLimit_0Star.Value,
+                1 => TuskAndTether.WolfWeightLimit_1Star.Value,
+                2 => TuskAndTether.WolfWeightLimit_2Star.Value,
+                _ => TuskAndTether.WolfWeightLimit_0Star.Value
+            };
         }
 
         public static float GetCartWeight(GameObject cart)
